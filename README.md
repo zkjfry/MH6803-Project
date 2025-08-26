@@ -1,6 +1,6 @@
 # MH6803-Project
 
-Project Proposal: Intelligent Personal Finance Management System\
+*Project Proposal*: Intelligent Personal Finance Management System\
 Project Overview\
 Develop a graphical personal finance management application to help users track income and expenses, create budgets, analyze spending habits, and provide intelligent financial advice.\
 Core Functions\
