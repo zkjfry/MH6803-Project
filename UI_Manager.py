@@ -2,6 +2,23 @@
 import tkinter as tk
 from tkinter import ttk
 import sys
+import importlib
+import json
+import traceback
+from pathlib import Path
+
+def _opt_import(name):
+    try:
+        return importlib.import_module(name)
+    except Exception:
+        return None
+
+_DATA = _opt_import("data_manager")
+_VIZ  = _opt_import("visualization")
+_ADV  = _opt_import("advancedFeatureManager")
+_FIN  = _opt_import("finance_calculator")
+_TST  = _opt_import("test_manager")
+
 
 # ===== Color constants =====
 GREEN = "#2E8B57"
@@ -12,6 +29,19 @@ SIDEBAR_BG = "#e8e8e8"
 APP_BG = "#FFFFFF"
 PANEL_BG = "#F6F7F9"
 TEXT_BG = "#F8F9FA"
+
+# --- ADD: safe call helpers ---
+def _first_attr(mod, *names):
+    if not mod: return None
+    for n in names:
+        f = getattr(mod, n, None)
+        if callable(f):
+            return f
+    return None
+
+def _ensure_dir(p: Path):
+    p.mkdir(parents=True, exist_ok=True)
+
 
 class UIManager:
     def __init__(self, root: tk.Tk):
@@ -34,7 +64,7 @@ class UIManager:
         self.root.grid_rowconfigure(1, weight=1)
         self.root.grid_columnconfigure(1, weight=1)
 
-        # shortcut key£ºCtrl/? + 1..5
+        # shortcut keyï¿½ï¿½Ctrl/? + 1..5
         mod = "Command" if sys.platform == "darwin" else "Control"
         self.root.bind_all(f"<{mod}-1>", lambda e: self._nav_hotkey("Dashboard"))
         self.root.bind_all(f"<{mod}-2>", lambda e: self._nav_hotkey("Transactions"))
@@ -259,14 +289,14 @@ class UIManager:
         ttk.Label(f, text="Transactions", style="Heading.TLabel", background=APP_BG)\
             .pack(anchor="w", padx=16, pady=(16, 8))
 
-        # ¡ª¡ª Toolbar: Using the button factory (hover effect) ¡ª¡ª
+        # ï¿½ï¿½ï¿½ï¿½ Toolbar: Using the button factory (hover effect) ï¿½ï¿½ï¿½ï¿½
         bar = tk.Frame(f, bg=APP_BG)
         bar.pack(fill="x", padx=16, pady=(0, 8))
         self.create_button_with_style(bar, "Add",    lambda: print("Add clicked")).pack(side="left", padx=(0, 8))
         self.create_button_with_style(bar, "Import", lambda: print("Import clicked")).pack(side="left", padx=(0, 8))
         self.create_button_with_style(bar, "Export", lambda: print("Export clicked")).pack(side="left")
 
-        # ¡ª¡ª Table placeholder (can subsequently replace DataManager's real data) ¡ª¡ª
+        # ï¿½ï¿½ï¿½ï¿½ Table placeholder (can subsequently replace DataManager's real data) ï¿½ï¿½ï¿½ï¿½
         host = tk.Frame(f, bg=APP_BG)
         host.pack(fill="both", expand=True, padx=16, pady=(0, 16))
 
