@@ -1,0 +1,32 @@
+{
+  "transactions": [
+    {
+      "date": "2025-09-11",
+      "type": "expense",
+      "category": "Medical",
+      "amount": 100.0,
+      "description": "testing",
+      "timestamp": "2025-09-11T14:15:19.826719"
+    }
+  ],
+  "budgets": {},
+  "goals": [],
+  "categories": {
+    "income": [
+      "Salary",
+      "Bonus",
+      "Investment Return",
+      "Other Income"
+    ],
+    "expense": [
+      "Food",
+      "Transport",
+      "Shopping",
+      "Entertainment",
+      "Housing",
+      "Medical",
+      "Education",
+      "Other Expense"
+    ]
+  }
+}
